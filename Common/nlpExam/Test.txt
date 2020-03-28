@@ -1,0 +1,1 @@
+1.  Write the necessary Python lines to check the sentiment of a given string.

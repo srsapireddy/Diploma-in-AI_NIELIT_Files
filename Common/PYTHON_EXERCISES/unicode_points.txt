@@ -1,0 +1,238 @@
+encoding - chars -> raw bytes
+decoding - raw bytes -> chars
+8-bit technologies
+ascii
+		-128 chars into 7-bit integers
+		-000 0000(0) - 001 1111(31) control chars
+		-010 0000(32)- 010 1111(47) sp chars
+		-011 0000(48)- 0-9:;<>=
+		-100 0001(65)- A-Z..
+		-110 0001(97)- a-z
+		-111 1111(127)-DEL char
+1980-Xerox-multibyte encoding- base for unicode
+1988-uncode project started
+1991 Jan-unicode consortium
+1991 Oct-Unicode V1.0
+Design goals	-universal std covers all writing systems
+		-no shift sequences,special states
+		-uniform encoding width : 16 bit value
+		-a 16b value represents the same char always
+Another std:ISO/IEC 10646 -1984 - UCS project(32-bit)
+merger of the two and TUS 1.1
+65k code points of Unicode not enough-revised 16-bit encoding:UTF-16
+	accepted by UCS and Unicode
+existence 8-bit processors - 8-bit encoding form UTF-8
+both in TUS2.0
+Aligning with UCS , UTF-32 for Unicode - TUS3.1
+Latest verion:TUS11.0-Jun2018
+
+Technical Aspects
+-----------------
+================================================================
+Unicode scalar values-	characters are coded using integer values
+			hexadecimal notation: U+,min of 4 digits
+			or using name- LATIN SMALL LETTER A
+			or using both
+			(Any unicode  codepoint except surrogates) 
+================================================================
+Code point		Any value in the unicode code space
+			or code position
+================================================================
+Unicode code space- 	U+0000 to
+			U+10FFFF
+			17 planes of 64K codepoints each
+================================================================
+Plane0-			U+0000 to U+FFFF
+			al of the most common chars are encoded
+			Basic Multi Lingual Plane-BMP
+================================================================
+Gaps-			unassinged and reserved as non chars
+			last 2 code points in each plane-
+				U+nFFFE,U+nFFFF
+			32 code points from U+FDD0 to U+FDEF
+			2048 code points from U+D800 to U+DFFF
+				Surrogate code units-
+				to represent code units- 
+						in Plane 1 to 16	
+			The range U+E000 to U+F8FF -
+					Private use area
+			Plane15,16 - private use area		
+================================================================
+Blocks-			Characters arranges in named ranges
+			Thaana - U+0780 to U+07BF
+			Malayalam - U+0D00 to U+0D7F
+================================================================
+Encoded character-	Mapping between character and codepoint
+================================================================
+Noncharacters-		Code points reserved for internal use	
+================================================================
+Unassigned code point-	Code points reserved for future
+				assignment	
+================================================================
+Surrogates-		High surrogate code point
+				A code point in U+D800..U+DBFF
+				used in UTF-16
+					as leading code unit
+			Low surrogate code point
+				U+DC00 to U+DFFF
+				as trailing code unit
+			Surrogate pair is a representation for 
+				a single character using two 
+				16-bit code units
+================================================================
+code unit-		minimum bit combination, can represent
+				a unit of encoded text for
+					processing
+			Also, code unit sequence -single char
+    			8-bit code units in UTF-8
+			16-bit code units in UTF-16
+			32-bit code units in UTF-32	  
+================================================================
+Unicode encoding form-	also,Unicode(UCS) Transformation Format
+			Mapping or assigning of 
+				Unicode scalar value to 
+					code unit sequence                         
+			one-to-one mapping,not onto
+================================================================
+UTF-32-			Assigns each unicode scalar value to 
+				single 32-bit code unit
+			same numeric value
+
+eg.
+<004D 0430 4E8C 10302> is represented as
+<0000004D 00000430 00004E8C 00010302>
+================================================================
+UTF-16			Assigns each unicode scalar value in the
+				ranges U+0000 to U+D7FF
+				       U+E000 to U+FFFF
+			to 16-b codeunit with same numeric value
+
+			& assigns each unicode scalar value in
+			U+10000 to U+10FFFF to a surrogate pair	
+eg.
+<004D 0430 4E8C 10302> is represented as
+<004D 0430 4E8C D800 DF02>
+================================================================
+UTF-8			Assigns each unicode scalar value to
+			 byte sequence of 1 to 4 bytes
+			----------------------------------------
+ 			scalar-	U+0000 to U+007F
+			        00000000 to 01111111
+			a value-0xxxxxxx
+			repr-	0xxxxxxx
+				Byte1
+			----------------------------------------
+			scalar- U+0080 to U+07FF
+			a value-00000yyy yyxxxxxx
+			repr-	110yyyyy 10xxxxxx
+				Byte1	 Byte2
+			----------------------------------------
+			scalar- U+0800 to U+FFFF
+			a value-zzzzyyyy yyxxxxxx
+			repr-	1110zzzz 10yyyyyy 10xxxxxx
+				Byte1	 Byte2    Byte3
+			----------------------------------------
+			scalar- U+10000 to U+10FFFF
+			a value-000uuuuu zzzzyyyy yyxxxxxx
+			repr-	11110uuu 10uuzzzz 10yyyyyy 10xxxxxx
+				Byte1	 Byte2    Byte3    Byte4 
+			----------------------------------------
+<004D 0430 4E8C 10302> is represented as
+<4D D0B0 E4BA8C F0908C82>
+================================================================
+unicode string- 	A code unit sequence containing 
+				code units of a particular
+					encoding form
+================================================================
+Unicode encoding schemes-A Byte serialization for UTF including
+				the spec of byteorder mark(BOM)
+			7 encoding schemes
+================================================================
+UTF-8			exactly the same order as the
+				given code unit sequence
+			eg.
+			<4D D0 B0 E4 BA 8C F0 90 8C 82> 
+			Serialized as
+			<4D D0 B0 E4 BA 8C F0 90 8C 82> 
+================================================================
+UTF-16BE		BigEndian format
+			An initial byte sequence
+				<FE FF> is interpreted as <FE FF>
+			eg.
+			<004D 0430 4E8C D800 DF02>
+			Serialized as
+			<00 4D 04 30 4E 8C D8 00 DF 02>
+================================================================
+UTF-16LE		LittleEndian format
+			An initial byte sequence
+				<FF FE> is interpreted as <FE FF>
+			eg.
+			<004D 0430 4E8C D800 DF02>
+			Serialized as
+			<4D 00 30 04 8C 4E 00 D8 02 DF>
+================================================================
+UTF-16 			Bigendian or  LittleEndian format
+			An initial byte sequence
+				<FE FF> is interpreted as BOM
+				not part of text
+				U+FEFF->BE
+				U+FFFE->LE
+			eg.
+			<004D 0430 4E8C D800 DF02>
+			Serialized as
+			<FE FF 00 4D 04 30 4E 8C D8 00 DF 02> BE
+			<FF FE 4D 00 30 04 8C 4E 00 D8 02 DF> LE
+			
+			In the absence of BOM byte order is BE
+================================================================
+UTF-32BE		BigEndian format
+			An initial byte sequence
+			<00 00 FE FF> is interpreted as U+FEFF
+			eg.
+			<00010302>
+			Serialized as
+			<00010302>
+================================================================
+UTF-32LE		LittleEndian format
+			An initial byte sequence
+			<FF FE 00 00> is interpreted as U+FEFF
+			eg.
+			<00010302>
+			Serialized as
+			<02030100>
+================================================================
+UTF-32			Big or LittleEndian format
+			as in UTF-16
+			If no BOM BE is assumed
+================================================================
+Unicode in Python3
+==================
+literals-
+	-Numeric-integers-no limit
+			 -dec,hex,oct,bin
+		-floats c doubles
+
+	-string -',",''',"""
+		-escape sequences
+			\,',",a,b,f,n,r,t,v,xhh,ooo,0,u,U,N
+		-raw strings - suppress escape sequences		
+
+encoding in python
+	ascii 0-127
+	chr(97)
+	ord('a')
+	Latin-1 -128-255,accented & other sp chars
+		-0-127 as in ascii
+	encoding->chars to raw bytes based on an encoding name
+	decoding->raw bytes to chars based on it's ---do-----
+================================================================
+Python string types
+	str-decoded unicode text including ascii
+	bytes-binary data including encoded text
+	bytearray-mutable version of bytes
+================================================================
+
+
+
+
+

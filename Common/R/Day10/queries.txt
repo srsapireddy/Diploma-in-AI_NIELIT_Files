@@ -1,0 +1,27 @@
+CREATE TABLE table_name (column_name column_type);
+DROP TABLE table_name ;
+INSERT INTO table_name ( field1, field2,...fieldN )  VALUES   ( value1, value2,...valueN );
+SELECT field1, field2,...fieldN FROM table_name1, table_name2... [WHERE Clause] [OFFSET M ][LIMIT N]
+
+
+
+SELECT CustomerName, City FROM Customers;
+SELECT COUNT(DISTINCT Country) FROM Customers;
+SELECT * FROM Customers WHERE Country='Mexico';
+SELECT * FROM Customers WHERE Country='Germany' AND City='Berlin';
+SELECT * FROM Customers ORDER BY Country;
+INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
+VALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway');
+
+UPDATE Customers SET ContactName = 'Alfred Schmidt', City= 'Frankfurt' WHERE CustomerID = 1; 
+DELETE FROM Customers WHERE CustomerName='Alfreds Futterkiste';
+
+SELECT TOP 3 * FROM Customers;
+SELECT MIN(Price) AS SmallestPrice FROM Products; 
+SELECT COUNT(ProductID) FROM Products;
+SELECT AVG(Price) FROM Products;
+SELECT SUM(Quantity) FROM OrderDetails; 
+SELECT * FROM Customers WHERE CustomerName LIKE 'a%'; 
+SELECT * FROM Customers WHERE CustomerName LIKE '%a'; 
+SELECT * FROM Customers WHERE ContactName LIKE 'a%o'; 
+SELECT * FROM Customers WHERE Country IN ('Germany', 'France', 'UK');

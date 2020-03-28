@@ -1,0 +1,7 @@
+1. Design a game for children , which prints a singular word from a predefined list and asks the user to enter the plural of the word. Check if the answer is correct and display "Good","Correct","Wrong" etc based on the answer. (10 Marks)
+
+2. Using TextBlob ,
+
+(i). Read the contents of a file. List the sentences in file.
+
+(ii). Read an integer (n) fom the keyboard and display the nth sentence and nth word in the file. (10 Marks) 

@@ -1,0 +1,59 @@
+:
+Vi - Exercise 
+
+=============================================================================
+1. Open vi to create a new file named sample to contain some 10 lines(consisting of multiple words) of your choice.
+
+2. Insert 5 new lines(content,say, one two three) below 5th line(use repeat factor).
+
+3. Do the same after the last line (use repeat command).
+
+4. Write the first five lines to another file say sam1.
+
+5. Change the case of the first character in the first line.
+
+6. Repeat the same for second and third line.
+
+7. Split the screen into two.
+
+8. Open the file sam1 in one of the windows.
+
+9. Copy last 5 lines from sample to sam1.
+
+10.Save and close sam1's window.
+
+11.Get a shell without quiting vi and create 3 blank files named f1,f2and f3.
+
+12.Resume the edit session
+
+13.Insert the output of ls -l command at the end of the file sample.
+
+:14.Search for the pattern f followed by 1 or 2 or 3 and replace the same with the string 'a blank file'  
+
+15.undo the above operation.
+
+16.Search for the pattern f followed by 1 or 2 or 3 and replace the same with the source string and '(this is a blank file)' at the end (i.e. after the file name)
+	(hint: the source pattern will be there in &)
+
+17.Create a two letter abbreviation for your name and enter the same in two or three places.
+
+18.Remove the abbreviation and try using the same (hint: unab)
+
+19.Store the first line into buffer a, 3rd & 4th into buffer b and 5th into buffer c and without splitting the screen paste these buffers into a new file say sam3 and save the same.
+
+20.Do the same(Question 19) to create a file say sam4 using delete buffers .
+
+21.Create a command mode map ,say z, for saving your file.
+
+22.Remove the above mapping and make the same input mode mapping.
+
+23.Create file saving mapping for the function key F2 (#2 denotes F2) in text mode.
+
+24.Test autoindent and numbering features.
+
+25.Store the abbreviation created for Q.No.17 and mapping created in Q.No.23 in .exrc file in your home directory and test the same.
+
+============================================================================
+
+Now practice vi commands by creating requirements of your  own choice.
+============================================================================

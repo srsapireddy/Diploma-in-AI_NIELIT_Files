@@ -1,0 +1,4 @@
+
+1. Write a python module to define a tzinfo subclass capturing time zone information
+ for Kabul, Afghanistan, which used +4 UTC until 1945 and thereafter +4:30 UTC.
+ Import the module and test the tzinfo subclass for different datetime objects. 

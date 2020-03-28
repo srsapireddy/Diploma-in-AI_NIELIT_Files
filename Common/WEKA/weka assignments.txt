@@ -1,0 +1,13 @@
+1. Open weka explorer gui (use locate if needed)
+     cd /usr/local/weka-3-8-3/
+     java -jar weka.jar
+
+2. Load iris.arff data set in /usr/local/weka-3-8-3/data/
+      Create a model using any ML algorith amd save it.
+      Try to predict for last 4 rows of same data set after manually modifying it
+
+3. Use  the following data set for training and try predict the result for test set:
+     train : /home/tom/Desktop/common/ML/Day2/train.csv
+     test : /home/tom/Desktop/common/ML/Day2/test.csv
+   Predict and create confusion matrix
+   (Try converting to arff format)

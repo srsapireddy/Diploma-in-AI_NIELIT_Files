@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0054)http://mnemstudio.org/clustering-k-means-example-1.htm -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Step-By-Step K-Means Example</title>
+<meta name="description" content="Statistical Clustering. k-Means. View Java code. k-Means: Step-By-Step Example. As a simple illustration of a k-means algorithm, consider the following data set consisting of the scores of two variables on each of seven individuals: Subject A, B. This data set is to be grouped into two clusters.  As a first step in finding a sensible initial partition, let the A &amp; B values of the two individuals furthest apart (using the Euclidean distance measure), define the initial cluster means, giving: Individual Mean Vector (centroid) Group 1 Group 2. The remaining individuals are now examined in sequence and allocated to the cluster to which they are closest, in terms of Euclidean distance to the cluster mean. The mean vector is recalculated each time a new member is added. This leads to the following series of steps: Cluster 1 Cluster 2 Step Individual Mean Vector (centroid) Individual Mean Vector (centroid) Now the initial partition has changed, and the two clusters at this stage having the following characteristics: Individual. Mean. Vector. But we cannot yet be sure that each individual has been assigned to the right cluster.  So, we compare each individual�s distance to its own cluster mean and to that of the opposite cluster. And we find: Individual. Distance to mean (centroid) of Cluster 1. Distance to mean (centroid) of Cluster 2. Only individual 3 is nearer to the mean of the opposite cluster (Cluster 2) than its own (Cluster 1).  In other words, each individual\&#39;s distance to its own cluster mean should be smaller that the distance to the other cluster\&#39;s mean (which is not the case with individual 3).  Thus, individual 3 is relocated to Cluster 2 resulting in the new partition: The iterative relocation would now continue from this new partition until no more relocations occur.  However, in this example each individual is now nearer its own cluster mean than that of the other cluster and the iteration stops, choosing the latest partitioning as the final cluster solution. Also, it is possible that the k-means algorithm won\&#39;t find a final solution.  In this case it would be a good idea to consider stopping the algorithm after a pre-chosen maximum of iterations.">
+
+<link href="./Step-By-Step K-Means Example_files/main.css" rel="stylesheet" type="text/css">
+<link href="./Step-By-Step K-Means Example_files/main_menu.css" rel="stylesheet" type="text/css">
+<link href="./Step-By-Step K-Means Example_files/left_menu.css" rel="stylesheet" type="text/css">
+<link href="./Step-By-Step K-Means Example_files/news_menu.css" rel="stylesheet" type="text/css">
+<link href="./Step-By-Step K-Means Example_files/notepage.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<a name="top"></a> <!-- for those "back to top" links -->
+
+	<div class="main_container">
+<div class="leftColumn">
+<div class="leftMenuBottomSpacer"></div>
+</div>
+<div class="centerColumn">
+
+<ul class="topic_main_list">
+	<li></li>
+</ul>
+
+<div class="topic_passage">
+<div class="content_header"><h1>k-Means: Example</h1></div>
+	<p>
+    An illustration of a k-means algorithm, consider the following data set consisting of the scores of two variables on each of seven individuals:</p>
+	<div align="center">
+		<table border="1" width="40%" id="table1" bordercolorlight="#266426" bordercolordark="#266426" style="border-collapse: collapse">
+			<tbody><tr>
+				<td width="34%" align="center"><font face="Arial" size="2"></font></td>
+				<td width="33%" align="center"><font face="Arial" size="2">A</font></td>
+				<td width="33%" align="center"><font face="Arial" size="2">B</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">1</font></td>
+				<td align="center"><font face="Arial" size="2">1.0</font></td>
+				<td align="center"><font face="Arial" size="2">1.0</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">2</font></td>
+				<td align="center"><font face="Arial" size="2">1.5</font></td>
+				<td align="center"><font face="Arial" size="2">2.0</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">3</font></td>
+				<td align="center"><font face="Arial" size="2">3.0</font></td>
+				<td align="center"><font face="Arial" size="2">4.0</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">4</font></td>
+				<td align="center"><font face="Arial" size="2">5.0</font></td>
+				<td align="center"><font face="Arial" size="2">7.0</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">5</font></td>
+				<td align="center"><font face="Arial" size="2">3.5</font></td>
+				<td align="center"><font face="Arial" size="2">5.0</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">6</font></td>
+				<td align="center"><font face="Arial" size="2">4.5</font></td>
+				<td align="center"><font face="Arial" size="2">5.0</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">7</font></td>
+				<td align="center"><font face="Arial" size="2">3.5</font></td>
+				<td align="center"><font face="Arial" size="2">4.5</font></td>
+			</tr>
+		</tbody></table>
+	</div>
+
+	<p>&nbsp;</p>
+	<p>This data set is to be grouped into two clusters.&nbsp; As a first step in finding a sensible initial partition, let the A &amp; B values of the two individuals furthest apart (using the Euclidean distance measure), define the initial cluster means, giving:</p>
+
+	<div align="center">
+		<table border="1" width="40%" id="table2" bordercolorlight="#266426" bordercolordark="#266426" style="border-collapse: collapse">
+			<tbody><tr>
+				<td width="34%" align="center">&nbsp;</td>
+				<td width="33%" align="center"><font face="Arial" size="2">
+				Individual</font></td>
+				<td width="33%" align="center"><font face="Arial" size="2">Mean 
+				Vector (centroid)</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">Group 1</font></td>
+				<td align="center"><font face="Arial" size="2">1</font></td>
+				<td align="center"><font face="Arial" size="2">(1.0, 1.0)</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">Group 2</font></td>
+				<td align="center"><font face="Arial" size="2">4</font></td>
+				<td align="center"><font face="Arial" size="2">(5.0, 7.0)</font></td>
+			</tr>
+		</tbody></table>
+	</div>
+
+	<p>&nbsp;</p>
+	<p>The remaining individuals are now examined in sequence and allocated to the cluster to which they are closest, in terms of Euclidean distance to the cluster mean. The mean vector is recalculated each time a new member is added. This leads to the following series of steps:</p>
+
+	<div align="center">
+		<table border="1" width="60%" id="table3" bordercolorlight="#266426" bordercolordark="#266426" style="border-collapse: collapse">
+			<tbody><tr>
+				<td align="center">&nbsp;</td>
+				<td align="center" colspan="2"><font face="Arial" size="2">Cluster 1</font></td>
+				<td align="center" colspan="2"><font face="Arial" size="2">Cluster 2</font></td>
+			</tr>
+			<tr>
+				<td align="center" width="20%"><font face="Arial" size="2">Step</font></td>
+				<td align="center" width="20%"><font face="Arial" size="2">
+				Individual</font></td>
+				<td align="center" width="20%"><font face="Arial" size="2">Mean 
+				Vector (centroid)</font></td>
+				<td align="center" width="20%"><font face="Arial" size="2">
+				Individual</font></td>
+				<td align="center" width="20%"><font face="Arial" size="2">Mean 
+				Vector (centroid)</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">1</font></td>
+				<td align="center"><font face="Arial" size="2">1</font></td>
+				<td align="center"><font face="Arial" size="2">(1.0, 1.0)</font></td>
+				<td align="center"><font face="Arial" size="2">4</font></td>
+				<td align="center"><font face="Arial" size="2">(5.0, 7.0)</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">2</font></td>
+				<td align="center"><font face="Arial" size="2">1, 2</font></td>
+				<td align="center"><font face="Arial" size="2">(1.2, 1.5)</font></td>
+				<td align="center"><font face="Arial" size="2">4</font></td>
+				<td align="center"><font face="Arial" size="2">(5.0, 7.0)</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">3</font></td>
+				<td align="center"><font face="Arial" size="2">1, 2, 3</font></td>
+				<td align="center"><font face="Arial" size="2">(1.8, 2.3)</font></td>
+				<td align="center"><font face="Arial" size="2">4</font></td>
+				<td align="center"><font face="Arial" size="2">(5.0, 7.0)</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">4</font></td>
+				<td align="center"><font face="Arial" size="2">1, 2, 3</font></td>
+				<td align="center"><font face="Arial" size="2">(1.8, 2.3)</font></td>
+				<td align="center"><font face="Arial" size="2">4, 5</font></td>
+				<td align="center"><font face="Arial" size="2">(4.2, 6.0)</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">5</font></td>
+				<td align="center"><font face="Arial" size="2">1, 2, 3</font></td>
+				<td align="center"><font face="Arial" size="2">(1.8, 2.3)</font></td>
+				<td align="center"><font face="Arial" size="2">4, 5, 6</font></td>
+				<td align="center"><font face="Arial" size="2">(4.3, 5.7)</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">6</font></td>
+				<td align="center"><font face="Arial" size="2">1, 2, 3</font></td>
+				<td align="center"><font face="Arial" size="2">(1.8, 2.3)</font></td>
+				<td align="center"><font face="Arial" size="2">4, 5, 6, 7</font></td>
+				<td align="center"><font face="Arial" size="2">(4.1, 5.4)</font></td>
+			</tr>
+		</tbody></table>
+	</div>
+
+	<p>&nbsp;</p>
+	<p>Now the initial partition has changed, and the two clusters at this stage having the following characteristics:</p>
+
+	<div align="center">
+		<table border="1" width="40%" id="table4" bordercolorlight="#266426" bordercolordark="#266426" style="border-collapse: collapse">
+			<tbody><tr>
+				<td align="center" width="34%">&nbsp;</td>
+				<td align="center" width="33%"><font face="Arial" size="2">
+				Individual</font></td>
+				<td align="center" width="33%"><font face="Arial" size="2">Mean 
+				Vector (centroid)</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">Cluster 1</font></td>
+				<td align="center"><font face="Arial" size="2">1, 2, 3</font></td>
+				<td align="center"><font face="Arial" size="2">(1.8, 2.3)</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">Cluster 2</font></td>
+				<td align="center"><font face="Arial" size="2">4, 5, 6, 7</font></td>
+				<td align="center"><font face="Arial" size="2">(4.1, 5.4)</font></td>
+			</tr>
+		</tbody></table>
+	</div>
+
+	<p>&nbsp;</p>
+	<p>But we cannot yet be sure that each individual has been assigned to the right cluster.&nbsp; So, we compare each individual’s distance to its own cluster mean and to<br> that of the opposite cluster. And we find:</p>
+
+	<div align="center">
+		<table border="1" width="40%" id="table5" bordercolorlight="#266426" bordercolordark="#266426" style="border-collapse: collapse">
+			<tbody><tr>
+				<td width="34%" align="center"><font face="Arial" size="2">
+				Individual</font></td>
+				<td width="33%" align="center"><font face="Arial" size="2">Distance 
+				to mean (centroid) of Cluster 1</font></td>
+				<td width="33%" align="center"><font face="Arial" size="2">Distance 
+				to mean (centroid) of Cluster 2</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">1</font></td>
+				<td align="center"><font face="Arial" size="2">1.5</font></td>
+				<td align="center"><font face="Arial" size="2">5.4</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">2</font></td>
+				<td align="center"><font face="Arial" size="2">0.4</font></td>
+				<td align="center"><font face="Arial" size="2">4.3</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">3</font></td>
+				<td align="center"><font face="Arial" size="2">2.1</font></td>
+				<td align="center"><font face="Arial" size="2">1.8</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">4</font></td>
+				<td align="center"><font face="Arial" size="2">5.7</font></td>
+				<td align="center"><font face="Arial" size="2">1.8</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">5</font></td>
+				<td align="center"><font face="Arial" size="2">3.2</font></td>
+				<td align="center"><font face="Arial" size="2">0.7</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">6</font></td>
+				<td align="center"><font face="Arial" size="2">3.8</font></td>
+				<td align="center"><font face="Arial" size="2">0.6</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">7</font></td>
+				<td align="center"><font face="Arial" size="2">2.8</font></td>
+				<td align="center"><font face="Arial" size="2">1.1</font></td>
+			</tr>
+		</tbody></table>
+		<blockquote>
+			<p align="left">&nbsp;</p>
+			<p align="left">Only individual 3 is nearer to the mean of the opposite cluster (Cluster 2) than its own (Cluster 1).&nbsp; In other words, each individual's distance to its own cluster mean should be smaller that the distance to the other cluster's mean (which is not the case with individual 3).&nbsp; Thus, individual 3 is relocated to Cluster 2 resulting in the new partition:</p>
+		</blockquote>
+	</div>
+	<div align="center">
+		<table border="1" width="40%" id="table4" bordercolorlight="#266426" bordercolordark="#266426" style="border-collapse: collapse">
+			<tbody><tr>
+				<td align="center" width="34%">&nbsp;</td>
+				<td align="center" width="33%"><font face="Arial" size="2">
+				Individual</font></td>
+				<td align="center" width="33%"><font face="Arial" size="2">Mean 
+				Vector (centroid)</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">Cluster 1</font></td>
+				<td align="center"><font face="Arial" size="2">1, 2</font></td>
+				<td align="center"><font face="Arial" size="2">(1.3, 1.5)</font></td>
+			</tr>
+			<tr>
+				<td align="center"><font face="Arial" size="2">Cluster 2</font></td>
+				<td align="center"><font face="Arial" size="2">3, 4, 5, 6, 7</font></td>
+				<td align="center"><font face="Arial" size="2">(3.9, 5.1)</font></td>
+			</tr>
+		</tbody></table>
+	</div>
+
+	<p>&nbsp;</p>
+	<p>The iterative relocation would now continue from this new partition until no more relocations occur.&nbsp; However, in this example each individual is now nearer its own cluster mean than that of the other cluster and the iteration stops, choosing the latest partitioning as the final cluster solution.</p>
+	<p>Also, it is possible that the k-means algorithm won't find a final solution.&nbsp; In this case it would be a good idea to consider stopping the algorithm after a pre-chosen maximum of iterations.</p>
+	<p>&nbsp;</p>
+</div></div>
+</div>
+<div class="mainFooter">
+</div>
+</body></html>
